@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="static/styles.css">
+        <style>
+            * {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+a {
+  color: #666;
+  font-size: 15px;
+  display: inline-block;
+
+}
+
+p{
+    font-size: 15px;
+    font-weight: bold;
+}
+.login-title {
+  text-align: left;
+  font-size: 40px;
+  padding-bottom: 0;
+  margin-bottom: 2px;
+}
+#login-page {
+  display: flex;
+}
+.logo{
+    padding: 80px;
+   
+    position: absolute;
+  
+   
+  
+}
+.notice {
+  font-size: 13px;
+  text-align: left;
+  color: #666;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.login {
+  width: 50vw;
+  height: 100vh;
+  background: #FFF;
+  padding: 70px;
+  display: flex;
+  flex-direction: column;
+justify-content: center;
+  align-items: center;
+ 
+}
+.login-card{
+    width: 80%;
+    height: 50%;
+  
+}
+.login a {
+  margin-top: 25px;
+  text-align: center;
+}
+.form-login {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+}
+
+.input-email,
+.input-password {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  outline: solid black 1px;
+  margin: 4px 0 10px 0;
+  padding: 10px;
+  display: flex;
+}
+.icon {
+  padding: 4px;
+  color: #666;
+  min-width: 30px;
+  text-align: center;
+}
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  border: 0;
+  background: none;
+  font-size: 16px;
+  padding: 4px 0;
+  outline: none;
+}
+button[type="submit"] {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px;
+  background: #8800FF;
+  color: #FFF;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: ease all 0.3s;
+}
+button[type="submit"]:hover {
+  opacity: 0.9;
+}
+.link{
+    color:#8800FF
+}
+.background {
+  width: 50vw;
+  padding: 40px;
+  height: 100vh;
+  background: #CD94FF;
+  background-size: cover;
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Description {
+  max-width: 450px;
+  font-size: 20px;
+  color:black;
+  text-align: left;
+ 
+  
+}
+
+
+.checkbox label {
+  display: inline;
+  margin: 0;
+}
+.flash {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.info { background-color: #d1ecf1; color: #0c5460; }
+        .flash.warning { background-color: #fff3cd; color: #856404; }
+        .flash.error { background-color: #f8d7da; color: #721c24; }
+
+
+        </style>
+    </head>
+    <body>
+  
+        <div id="login-page">
+            <div class="logo"><img src="{{ url_for('static', filename=logo_url) }}" alt="" width="189px" height="81px"></div>
+            <div class="login">
+          
+            <div class = "login-card">
+              <h2 class="login-title">Login</h2>
+              <div id="messages">
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+              <p class="notice">Please enter email and password.</p>
+              <form  method="POST">
+                <p>E-mail</p>
+                <div class="input-email">
+    
+                  <input type="email" name="email" placeholder="Enter your e-mail" required>
+                </div>
+                <p>Password</p>
+                <div class="input-password">
+                
+                  <input type="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="checkbox">
+                  <label for="remember">
+                    <input type="checkbox" name="remember">
+                    Remember me
+                  </label>
+                </div>
+                <button type="submit"> Sign in</button>
+              </form>
+                <a>Don't Have your account? &#160;</a><a class = "link"href="{{ url_for('register') }}"> Register.</a>
+            </div>
+            </div>
+            <div class="background">
+                <div class="image">
+                    <img src="{{ url_for('static', filename=graphic_url) }}" alt=""width="450" height="360">
+                </div>
+                <div class="Description">
+              <h1>This is where you interact with your teammates.</h1>
+              </div>
+            </div>
+          </div>
+        
+        <script src="" async defer></script>
+    </body>
+</html>

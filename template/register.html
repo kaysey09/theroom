@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        
+        <style>
+            * {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+a {
+  color: #666;
+  font-size: 15px;
+  display: inline-block;
+
+}
+
+p{
+    font-size: 15px;
+    font-weight: bold;
+}
+.register-title {
+  text-align: left;
+  font-size: 40px;
+  padding-bottom: 0;
+  margin-bottom: 2px;
+}
+#register-page {
+  display: flex;
+}
+.logo{
+    padding: 80px;
+   
+    position: absolute;
+  
+   
+  
+}
+.notice {
+  font-size: 13px;
+  text-align: left;
+  color: #666;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.register {
+  width: 100vw;
+  height: 100vh;
+  background: #FFF;
+  padding: 70px;
+  display: flex;
+  flex-direction: column;
+justify-content: center;
+  align-items: center;
+ 
+}
+.register-card{
+    width: 30%;
+    height: 50%;
+  
+}
+.register a {
+  margin-top: 25px;
+  text-align: center;
+}
+.form-register {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+}
+
+.input-email,
+.input-password {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  outline: solid black 1px;
+  margin: 4px 0 10px 0;
+  padding: 10px;
+  display: flex;
+}
+.icon {
+  padding: 4px;
+  color: #666;
+  min-width: 30px;
+  text-align: center;
+}
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  border: 0;
+  background: none;
+  font-size: 16px;
+  padding: 4px 0;
+  outline: none;
+}
+button[type="submit"] {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px;
+  background: #8800FF;
+  color: #FFF;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 15px;
+  transition: ease all 0.3s;
+}
+button[type="submit"]:hover {
+  opacity: 0.9;
+}
+.link{
+    color:#8800FF;
+}
+
+
+
+
+
+
+        </style>
+    </head>
+    <body>
+        
+        <div id="register-page">
+            <div class="logo"><img src="{{ url_for('static', filename=logo_url) }}" alt="" width="189px" height="81px"></div>
+            <div class="register">
+          
+            <div class = "register-card">
+              <h2 class="register-title">Register</h2>
+              <p class="notice">Please enter email and password to register.</p>
+              <form method="POST">
+                <p>E-mail</p>
+                <div class="input-email">
+    
+                  <input type="email" name="email" id="email" placeholder="Enter your e-mail" required>
+                </div>
+                <p>Password</p>
+                <div class="input-password">
+                
+                  <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                </div>
+           
+                <button type="submit"> Register</button>
+              </form>
+                <a>Have an account? &#160;</a><a class = "link"href="{{ url_for('login') }}"> Login.</a>
+            </div>
+            </div>
+          </div>
+        
+        <script src="" async defer></script>
+    </body>
+</html>

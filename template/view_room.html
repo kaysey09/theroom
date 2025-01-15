@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/styles.css">
+        <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/8d09913b6e.js" crossorigin="anonymous"></script>
+        <style>
+ 
+
+.col{
+    display: flex;
+    flex-flow:row;
+    justify-content: center;
+    
+}
+.logout .btn-primary{
+    background-color: red;
+    color: white;
+}
+.logout .btn-primary:hover{
+    background-color: #921824;
+}
+.card{
+    width: 300px;
+    margin-right: 20px;
+
+}
+.heading{
+    margin: 20px;
+    border-bottom: 1px solid gray;
+}
+.wrapper{
+  
+  height: 90vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.image-frame{
+  border: 1px solid gray;
+  border-radius: 10px;
+  height: 35%;
+  width: 60%;
+ 
+}
+.image-frame img{
+    object-fit: cover;
+}
+.info-frame{
+  display: flex;
+  
+  height: 30%;
+  width: 60%;
+  flex-flow: row;
+}
+.booking-modal{
+  border: 1px solid rgb(230, 229, 229);
+  border-radius: 10px;
+  width: 60%;
+  margin-top: 10px;
+  height: fit-content;
+}
+
+.top-modal{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  height: 40%;
+
+}
+.description{
+  padding-top:20px;
+  padding-left: 20px;
+ 
+  width: 70%;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+a{
+    font-size: 16px;
+    
+}
+.book-button{
+  position:absolute;
+  padding-left: 480px;
+
+}
+h6{
+  padding: 20px;
+  word-wrap: break-word;
+ 
+}
+.text{
+ 
+  height: 60%;
+  width: 100%;
+  padding-left: 20px;
+ 
+ 
+}
+.text h6{
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 400;
+}
+.facilities{
+  display: flex;
+  flex-flow:column;
+  
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(230, 229, 229);
+  border-radius: 10px;
+  margin-left: 10px; 
+  margin-top: 10px;
+  width: 40%;
+  height:fit-content;
+  padding-bottom: 20px;
+  
+}
+.up{
+    padding-top: 20px;
+    height: 20%;
+    width: 80%;
+    color: black;
+    font-weight: bold;
+}
+.fa-house{
+    margin-right: 5px;
+}
+.fa-user-group{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.down{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    width: 90%;
+    overflow: auto;
+    
+   
+}
+.bubble{
+  border: 1px solid rgb(230, 229, 229);
+  border-radius: 10px;
+  width: 40%;
+  height: 25%;
+   
+  margin: 10px;
+
+  text-align: center;
+
+}
+p{
+  text-align: center;
+vertical-align: middle;
+line-height: 25px;
+padding-top: 10px;
+font-size: 16px;
+}
+h1{
+    border-bottom: 1px solid gray;
+}
+.flash {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.info { background-color: #d1ecf1; color: #0c5460; }
+        .flash.warning { background-color: #fff3cd; color: #856404; }
+        .flash.error { background-color: #f8d7da; color: #721c24; }
+        </style>
+    </head>
+    <body>
+       <div class="Navigation">
+        <div class="left">
+        <div class="logo"><img src="{{ url_for('static', filename=logo_url) }}" alt="" width="150px" height="60px"></div>
+        <div class="button"><a href="{{ url_for('user_dashboard') }}" class="btn btn-primary">Home</a></div>
+        <div class="button"><a href="{{ url_for('booking_history') }}" class="btn btn-primary">Bookings</a></div>
+    </div>
+    <div class="right">
+       
+        <div class="user"><a>User</a></div>
+        <div class="logout"><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></div>
+       </div>
+        </div>
+        <script src="" async defer></script>
+        <div id="messages">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="wrapper">
+           
+            <div class="image-frame"><img src="{{ room.image_url }}" alt="" width="100%" height="100%"></div>
+            <div class="info-frame">
+                <div class="booking-modal">
+                    <div class="top-modal">
+                        <div class="description">
+                            <h1>{{ room.room_name }}</h1>
+                            <a><i class="fa-solid fa-house"></i>{{ room.location }}</a> .
+                            <a><i class="fa-solid fa-user-group"></i>{{ room.capacity }} persons</a>
+                        </div>
+                        <div class="book-button">
+                            <a href="{{ url_for('book_room', room_id=room.id) }}" class="btn btn-primary">Reserve</a>
+                        </div>
+                    </div>
+                    <div class="text">
+                        <h6>{{ room.description }}
+                        </h6>
+                    </div>
+                </div>
+        
+                <div class="facilities">
+                    <div class="up">This room contains</div>
+                    <div class="down">
+                       
+                        {% if facilities %}
+                        {% for facility in facilities %}
+                            <div class="bubble">
+                                <p> 
+                                    {% if 'Air' in facility %}
+                                        <i class="fa-solid fa-fan"></i>
+                                    {% elif 'Wi-Fi' in facility or 'WiFi' in facility %}
+                                        <i class="fa-solid fa-wifi"></i>
+                                    {% elif 'Projector' in facility %}
+                                        <i class="fa-solid fa-video"></i>
+                                    {% elif 'Board' in facility %}
+                                        <i class="fa-solid fa-chalkboard"></i>
+                                    {% elif 'Power' in facility or 'Socket' in facility %}
+                                        <i class="fa-solid fa-plug"></i>
+                                    {% elif 'TV' in facility or 'Television' in facility %}
+                                        <i class="fa-solid fa-tv"></i>
+                                    {% elif 'Computer' in facility or 'PC' in facility %}
+                                        <i class="fa-solid fa-desktop"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    {% endif %}
+                                    {{ facility }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="bubble">
+                            <p>No facilities available</p>
+                        </div>
+                    {% endif %}
+                </div>
+                 </div>
+                </div>
+            </div>
+           
+         </div>
+         
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>

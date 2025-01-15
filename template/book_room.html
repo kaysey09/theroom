@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/8d09913b6e.js" crossorigin="anonymous"></script>
+        <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+        <link rel="stylesheet" href="/static/styles.css">
+        <style>
+
+.unavailable {
+        color: gray;
+        background-color: #f2f2f2;
+    }
+
+select{
+    border: 1px solid gray;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    background:white
+
+}
+
+.col{
+    display: flex;
+    flex-flow:row;
+    justify-content: center;
+    
+}
+
+.card{
+    width: 300px;
+    margin-right: 20px;
+
+}
+.heading{
+    margin: 20px;
+    border-bottom: 1px solid gray;
+}
+.wrapper{
+  
+  height: 90vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.image-frame{
+  border: 1px solid gray;
+  border-radius: 10px;
+  height: 35%;
+  width: 60%;
+ 
+}
+.image-frame img{
+    object-fit: cover;
+}
+.info-frame{
+  display: flex;
+  
+  height: 30%;
+  width: 60%;
+  flex-flow: row;
+}
+.booking-modal{
+  border: 1px solid rgb(230, 229, 229);
+  border-radius: 10px;
+  width: 60%;
+  margin-top: 10px;
+  height: fit-content;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.info{
+    margin-left: 30px;
+  
+}
+.info a{
+    font-size: 16px;
+    font-weight: 300;
+}
+.date{
+    margin-right: 56px;
+    font-weight: bold;
+
+}
+.st{
+    margin-right: 16px;
+    font-weight: bold;
+
+}
+.et{
+    margin-right: 25px;
+    font-weight: bold;
+
+}
+.submit-button{
+    margin-left: 150px;
+}
+.facilities{
+  display: flex;
+  flex-flow:column;
+  
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(230, 229, 229);
+  border-radius: 10px;
+  margin-left: 10px; 
+  margin-top: 10px;
+  width: 40%;
+  height: 100%;
+  
+}
+#error-message{
+margin: 0;
+font-size: 14px;
+color: red;
+}
+.booking{
+    margin: 10px;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+}
+p{
+  text-align: center;
+vertical-align: middle;
+line-height: 50px;
+font-size: 16px;
+}
+h6{
+    font-weight: bold;
+}
+
+.flash {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.info { background-color: #d1ecf1; color: #0c5460; }
+        .flash.warning { background-color: #fff3cd; color: #856404; }
+        .flash.error { background-color: #f8d7da; color: #721c24; }
+        </style>
+    </head>
+    <body>
+       <div class="Navigation">
+        <div class="left">
+        <div class="logo"><img src="{{ url_for('static', filename=logo_url) }}" alt="" width="150px" height="60px"></div>
+        <div class="button"><a href="{{ url_for('user_dashboard') }}" class="btn btn-primary">Home</a></div>
+        <div class="button"><a href="{{ url_for('booking_history') }}" class="btn btn-primary">Bookings</a></div>
+    </div>
+    <div class="right">
+       
+        <div class="user"><a href="">User</a></div>
+        <div class="logout"><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></div>
+       </div>
+        </div>
+        <script src="" async defer></script>
+        <div id="messages">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="wrapper">
+           
+            <div class="image-frame"><img src="{{ room.image_url }}" alt="" width="100%" height="100%"></div>
+            <div class="info-frame">
+                <div class="booking-modal">
+                    <div class="info"><h2>{{ room.room_name }}</h2></div>
+                    <div class="info"><h6>Room: <a>{{ room.location }}</a></h6></div>
+                    <div class="info"><h6>Capacity: <a>{{ room.capacity }}</a></h6></div>
+                    <div class="info"><h6>Facilities: <a>{{ facilities_text }}</a></h6> </div>
+                </div>
+        
+                <div class="facilities">
+                    <form method="POST" id="eventForm">
+                        <div class="booking">
+                            <label for="booking_date" class="date">Date: </label>
+                            <select id="booking_date" name="booking_date" required>
+                              
+                                <option selected>Select a date </option>
+                                {% for date in available_dates %}
+                                    <option id="booking_date" value="{{ date }}" >
+                                        {{ date }}
+                                    </option>
+                                {% endfor %}
+                                <i class="fa-solid fa-square-caret-down"></i>
+                            </select>
+                          
+                        </div>
+                        <div class="booking">
+                        <label for="start_time" class="st">Start-Time: </label>
+                            <select id="start_time" name="start_time"required>
+                                    <option selected>Select start time</option>
+                                {% for time in time_slots %}
+                                    <option value="{{ time }}" {% if time in disabled_times %} disabled {% endif %}>
+                                        {{ time }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                       
+                        </div>
+                        <div class="booking">
+                            <label for="end_time" class="et">End-Time: </label>
+                                <select id="end_time" name="end_time" required>
+                                    <option selected>Select end time</option>
+                                    {% for time in time_slots %}
+                                        <option value="{{ time }}">
+                                            {{ time }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <p id="error-message" class="error" style="display:none;">End time must be different from start time.</p>
+                            <div class="submit-button">
+                        <button type="submit" class="btn btn-primary">Book Room</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+           
+         </div>
+         <script>
+ document.addEventListener("DOMContentLoaded", function () {
+    let disabledTimes = {{ disabled_times|tojson }};
+    let validEndTimes = {{ valid_end_times|tojson }};
+    let timeSlots = {{ time_slots|tojson }};
+    let startTimeSelect = document.getElementById("start_time");
+    let endTimeSelect = document.getElementById("end_time");
+
+    // Disable the unavailable start and end times initially
+    function disableTimes(times, selectElement) {
+        for (let option of selectElement.options) {
+            if (times.includes(option.value)) {
+                option.disabled = true;
+            } else {
+                option.disabled = false;
+            }
+        }
+    }
+
+    // Disable the unavailable times in both start and end time selects
+    disableTimes(disabledTimes, startTimeSelect);
+    disableTimes(disabledTimes, endTimeSelect);
+
+    // Ensure that the end time is not earlier than or equal to the start time
+    startTimeSelect.addEventListener("change", function () {
+        let selectedStartTime = startTimeSelect.value;
+        let availableEndOptions = endTimeSelect.querySelectorAll('option');
+
+        // First, reset the disabled state of all options
+        availableEndOptions.forEach(option => {
+            option.disabled = false;
+        });
+
+        // Disable end times that are earlier than the selected start time or less than 30 minutes after the start time
+        let startTimeParts = selectedStartTime.split(":");
+        let startTimeInMinutes = parseInt(startTimeParts[0]) * 60 + parseInt(startTimeParts[1]);
+
+        availableEndOptions.forEach(option => {
+            let endTimeParts = option.value.split(":");
+            let endTimeInMinutes = parseInt(endTimeParts[0]) * 60 + parseInt(endTimeParts[1]);
+
+            // Disable end times that are less than 30 minutes after the selected start time
+            if (endTimeInMinutes <= startTimeInMinutes + 30 || disabledTimes.includes(option.value)) {
+                option.disabled = true;
+            }
+        });
+
+        // Also ensure that only valid end times are enabled
+        availableEndOptions.forEach(option => {
+            if (!validEndTimes.includes(option.value)) {
+                option.disabled = true;
+            }
+        });
+    });
+
+    // Ensure that end time slots are dynamically updated when the user changes the date
+    function updateAvailableTimesForDate(date) {
+        fetch(`/user/book_room/{{ room.id }}?selected_date=${date}`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+    
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update disabled times and valid end times for the selected date
+            disabledTimes = data.disabled_times;
+            validEndTimes = data.valid_end_times;
+
+            // Disable the unavailable start and end times
+            disableTimes(disabledTimes, startTimeSelect);
+            disableTimes(disabledTimes, endTimeSelect);
+
+            // Enable valid end times based on the selected start time
+            startTimeSelect.dispatchEvent(new Event('change'));
+        });
+    }
+
+    // Handle date change event and update available times
+    document.getElementById("booking_date").addEventListener("change", function () {
+        let selectedDate = this.value;
+        updateAvailableTimesForDate(selectedDate);
+    });
+});
+
+            </script>
+            
+                 
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>

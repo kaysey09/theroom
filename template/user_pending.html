@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/styles.css">
+        <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/8d09913b6e.js" crossorigin="anonymous"></script>
+        <style>
+
+
+.title-text{
+    border-bottom: 1px solid gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+h3{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20px;
+}
+.pad{
+    margin: 10px;
+}
+.btn-primary{
+    background-color:#8800FF;
+    margin-left: 20px;
+    width: 100px;
+    border: none;
+}
+.logout .btn-primary{
+    background-color: red;
+    color: white;
+}
+.logout .btn-primary:hover{
+    background-color: #921824;
+    color: white;
+}
+.flash {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.info { background-color: #d1ecf1; color: #0c5460; }
+        .flash.warning { background-color: #fff3cd; color: #856404; }
+        .flash.error { background-color: #f8d7da; color: #721c24; }
+        </style>
+    </head>
+    <body>
+       <div class="Navigation">
+        <div class="left">
+        <div class="logo"><img src="{{ url_for('static', filename=logo_url) }}" alt="" width="150px" height="60px"></div>
+        <div class="button"><a href="{{ url_for('user_pending') }}" class="btn btn-primary">Home</a></div>
+        <div class="button"><a href="{{ url_for('user_pending') }}" class="btn btn-primary">Bookings</a></div>
+    </div>
+    <div class="right">
+      
+        <div class="user"><a href="">User</a></div>
+        <div class="logout"><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></div>
+       </div>
+        </div>
+        <div class="pad">
+        <div class="title-text">
+            <h2 class="text-left">Available Meeting Rooms</h2>
+            <div id="messages">
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+                    </div>
+              <h3>Your verification process is in progress. Please come back Later!<i class="fa-solid fa-hourglass-start"></i></h1>
+              
+                
+                <script src="" async defer></script>
+            </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>
