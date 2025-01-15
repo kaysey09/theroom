@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/styles.css">
+        <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+        <style>
+
+
+.columns{
+    display: flex;
+    flex-flow:row;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    
+}
+.card{
+    width: 300px;
+    margin: 20px;
+
+}
+.heading{
+    margin: 20px;
+    border-bottom: 1px solid gray;
+}
+.flash {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.info { background-color: #d1ecf1; color: #0c5460; }
+        .flash.warning { background-color: #fff3cd; color: #856404; }
+        .flash.error { background-color: #f8d7da; color: #721c24; }
+        </style>
+    </head>
+    <body>
+       <div class="Navigation">
+        <div class="left">
+        <div class="logo"><img src="{{ url_for('static', filename=logo_url) }}" alt="" width="150px" height="60px"></div>
+        <div class="button"><a href="{{ url_for('create_room') }}" class="btn btn-primary">+ Room</a></div>
+        <div class="button"><a href="{{ url_for('manage_facilities') }}" class="btn btn-primary">+ Facilities</a></div>
+    </div>
+    <div class="right">
+        <div><a href="{{ url_for('verify_users') }}" class="btn btn-primary">Requests</a></div>
+        <div class="user"><a href="">Admin</a></div>
+        <div class="logout"><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></div>
+       </div>
+        </div>
+        <div id="messages">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <script src="" async defer></script>
+      <div class="heading">
+            <h2 class="text-left">Available Meeting Rooms</h2>
+      </div>
+           
+                <div class="columns">
+                    {% for room in rooms %}
+                   
+                            <div class="card">
+                               
+                                <img src="{{ room.image_url }}" class="card-img-top" alt="Room Image" height="60%">
+                                <div class="card-body">
+                                    <h5 class="card-title">Room Name: {{room.room_name}}</h5>
+                                    <p class="card-text">Capacity: {{ room.capacity }} people</p>
+                           
+                              <a href="{{ url_for('update_room', room_id=room.id) }}" class="btn btn-outline-primary">Edit</a>
+                              <a href="{{ url_for('delete_room', room_id=room.id) }}" class="btn btn-outline-primary">Delete</a>
+                                </div>
+                            </div>
+                            
+                    {% endfor %}
+                </div>
+                    
+              
+         
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>
