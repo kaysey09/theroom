@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 logo_url = 'images/image.png'
+graphic_url = 'images/meetings.png'
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -82,7 +83,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    logo_url = 'images/image.png'
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -97,8 +97,7 @@ def register():
     return render_template('register.html', logo_url=logo_url)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    logo_url = 'images/image.png'
-    graphic_url = 'images/meetings.png'
+   
 
     if request.method == 'POST':
         email = request.form['email']
@@ -172,13 +171,10 @@ def admin_dashboard():
 @app.route('/user_default_index')
 @login_required
 def user_default_index():
-    logo_url = 'images/image.png'
     return render_template('user_default_index.html', logo_url=logo_url)
 @app.route("/submit_master_data", methods=["GET", "POST"])
 @login_required
 def submit_master_data():
-    logo_url = 'images/image.png'
-
     if request.method == "POST":
         user_id = session.get("user_id")
         if not user_id:
@@ -255,7 +251,6 @@ def delete_facility(facility_id):
 @login_required
 def create_room():
     facilities = Facility.query.all()
-    logo_url = 'images/image.png'
     if not current_user.is_admin:
         return redirect(url_for('dashboard'))
     if request.method == 'POST':
@@ -269,7 +264,7 @@ def create_room():
         new_room = Room(room_name=room_name, capacity=capacity, description=description, location=location, image_url=image_url)
         db.session.add(new_room)
         db.session.commit()
-             # Handle selected facilities
+        # Handle selected facilities
         facility_ids = request.form.getlist('facilities[]')
         print("Selected facility IDs:", facility_ids)
         for facility_id in set(facility_ids):  # Using set to remove duplicates
@@ -289,7 +284,6 @@ def create_room():
 @login_required
 def update_room(room_id):
     facilities = Facility.query.all()
-    logo_url = 'images/image.png'
     if not current_user.is_admin:
         return redirect(url_for('dashboard'))
     room = Room.query.get_or_404(room_id)
@@ -351,7 +345,6 @@ def delete_room(room_id):
 @app.route('/admin/verify_users', methods=['GET', 'POST'])
 @login_required
 def verify_users():
-    logo_url = 'images/image.png'
     if not current_user.is_admin:
         return redirect(url_for('dashboard'))
     # Fetch all unverified users with master data
@@ -396,9 +389,6 @@ def view_room(room_id):
 def book_room(room_id):
     room = Room.query.get_or_404(room_id)
     user_id = session.get("user_id")
-
-   
-
     # Generate available dates for the next 7 days
     available_dates = [(datetime.today() + timedelta(days=i)).strftime('%Y-%m-%d') for i in range(7)]
 
@@ -468,7 +458,7 @@ def book_room(room_id):
             start_time=start_time,
             end_time=end_time,
             room_id=room.id,
-            user_id=user_id,  
+            user_id=user_id,  # Assuming the user ID is dynamic based on the logged-in user
             status='Upcoming'
         )
 
@@ -515,9 +505,9 @@ def book_room(room_id):
         time_slots=time_slots,
         booked_start_times=booked_start_times,
         booked_end_times=booked_end_times,
-        disabled_times=disabled_times,
-        valid_end_times=valid_end_times,
-        selected_date=selected_date,
+        disabled_times=disabled_times,  
+        valid_end_times=valid_end_times,  
+        selected_date=selected_date,  
         facilities_text=facilities_text,
         logo_url=logo_url
     )
