@@ -458,7 +458,7 @@ def book_room(room_id):
             start_time=start_time,
             end_time=end_time,
             room_id=room.id,
-            user_id=user_id,  # Assuming the user ID is dynamic based on the logged-in user
+            user_id=user_id,
             status='Upcoming'
         )
 
