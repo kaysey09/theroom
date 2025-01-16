@@ -1,6 +1,6 @@
 import unittest
 from flask_testing import TestCase
-from flask import Flask, render_template, redirect, url_for, request, flash, session,jsonify, request
+from flask import Flask, render_template, redirect, url_for, request, flash, session,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -272,7 +272,6 @@ def create_room():
              # Handle selected facilities
         facility_ids = request.form.getlist('facilities[]')
         print("Selected facility IDs:", facility_ids)
-        selected_facilities = request.form.getlist('facilities[]')
         for facility_id in set(facility_ids):  # Using set to remove duplicates
             try:
                 facility = Facility.query.get(int(facility_id))
@@ -469,7 +468,7 @@ def book_room(room_id):
             start_time=start_time,
             end_time=end_time,
             room_id=room.id,
-            user_id=user_id,  # Assuming the user ID is dynamic based on the logged-in user
+            user_id=user_id,  
             status='Upcoming'
         )
 
@@ -516,9 +515,9 @@ def book_room(room_id):
         time_slots=time_slots,
         booked_start_times=booked_start_times,
         booked_end_times=booked_end_times,
-        disabled_times=disabled_times,  # Pass unavailable times to the template
-        valid_end_times=valid_end_times,  # Pass valid end times to the template
-        selected_date=selected_date,  # Pass the selected date
+        disabled_times=disabled_times,
+        valid_end_times=valid_end_times,
+        selected_date=selected_date,
         facilities_text=facilities_text,
         logo_url=logo_url
     )
